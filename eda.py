@@ -1,18 +1,38 @@
+import os
 import pandas as pd
 import streamlit as st
 import seaborn as sns
 import matplotlib.pyplot as plt
 import plotly.express as px
+from stqdm import stqdm
 from st_aggrid import AgGrid
 from collections import Counter
 from nltk.corpus import stopwords
 from wordcloud import WordCloud
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
+from utils import remove_punctuation, lemmatize_text
 
-def perform_eda(news_df) :  
+
+def perform_eda() :  
+    uploaded_path = os.path.join('.','uploaded data')
+    files_dir = [f for f in os.listdir(uploaded_path) if os.path.isfile(os.path.join(uploaded_path, f))]
+
+    file = st.selectbox('Select File to Display', ['']+files_dir)
+
+    news_df =  pd.read_csv(os.path.join('uploaded data',file))
+
+    placeholder = st.empty()
+
+    with placeholder.container() :
+        st.info('Processing Data. This may take a while depending on the size of the file. Please be patient. Thank you 🙂')
+    
     '''Top 15 Most Frequent Words'''
     Analyzer = SentimentIntensityAnalyzer()
+
+    ########################################################################################################################
+    news_df['Text'] = news_df['Text'].str.lower()
+    news_df['Text'] = news_df['Text'].apply(remove_punctuation)
 
     stop_words = stopwords.words('english')
 
@@ -24,6 +44,8 @@ def perform_eda(news_df) :
     news_df['temp_list'] = news_df['Text'].apply(lambda x:str(x).split())
 
     news_df['Text'] = news_df['Text'].apply(lambda x: ' '.join([word for word in x.split() if word not in (stop_words)]))
+
+    news_df['Text'] = news_df['Text'].apply(lemmatize_text)
 
     news_df[news_df.Text.str.contains("bitcoin")].reset_index(drop=True, inplace=True)
 
@@ -88,8 +110,10 @@ def perform_eda(news_df) :
     temp_neg.columns = ['Frequent Words','count']
 
     #############################################################################################################################
+    placeholder.empty()
 
-    options = st.selectbox('Select Option', ('','15 Most Frequent Words in All News Articles', 'Frequent Words by Sentiment', 'Word Cloud'))
+    if not news_df.empty :
+        options = st.selectbox('Select Option', ('','15 Most Frequent Words in All News Articles', 'Frequent Words by Sentiment', 'Word Cloud'))
 
     if options == '':
         st.write('`Please Select an Option`')

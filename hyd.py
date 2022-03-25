@@ -4,6 +4,7 @@ import os
 import sys
 import pickle
 import subprocess
+import glob
 import streamlit as st
 import hydralit as hy
 import pandas as pd
@@ -32,7 +33,7 @@ from sklearn.neural_network import MLPClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import accuracy_score, f1_score
 
-app = hy.HydraApp(title='News Based Sentiment analysis for Bitcoin Price Prediction', navbar_theme=None)
+app = hy.HydraApp(title='News Based Sentiment analysis for Bitcoin Price Prediction', navbar_theme={'txc_inactive': '#FFFFFF','menu_background':'teal','txc_active':'black'})
 
 # hide_menu_style = """
 #         <style>
@@ -56,20 +57,56 @@ def my_home():
     
 @app.addapp(title='Data')
 def data():
-    # hy.markdown('The raw news dataset')
-    # hy.dataframe(news_df.drop('temp_list', axis=1))
-    # hy.markdown('\n\nThe bitcoin price datarset')
-    # st.dataframe(btc_df)
+    # col1, col2 = st.columns(2)
+
+    # with col1 :
+    #     st.title('Raw news dataset')
+    #     st.dataframe(news_df.drop('temp_list', axis=1))
+
+    # with col2 :
+    #     st.title('Raw bitcoin dataset')
+    #     st.dataframe(btc_df)
+
+    # data_options = st.selectbox('Select Which Data to Display', ['','Processed News Articles Data', 'Bitcoin Hourly Price Data'])
+
+    st.write('<style>div.row-widget.stRadio > div{flex-direction:row;justify-content: center;} </style>', unsafe_allow_html=True)
+    st.write('<style>div.st-bf{flex-direction:column;} div.st-ag{font-weight:bold;padding-left:2px;}</style>', unsafe_allow_html=True)
+
+    display_options = st.radio('', ('Show Default Data', 'Show Created/Uploaded Datasets'))
 
     col1, col2 = st.columns(2)
 
     with col1 :
-        st.title('Raw news dataset')
-        st.dataframe(news_df.drop('temp_list', axis=1))
+        data_options = st.selectbox('Select Which Data to Display', ['','Processed News Articles Data', 'Bitcoin Hourly Price Data'])
 
     with col2 :
-        st.title('Raw bitcoin dataset')
-        st.dataframe(btc_df)
+        theme = st.selectbox('Select Theme for Table', ['streamlit', 'light', 'dark', 'blue', 'fresh', 'material'])
+
+    
+    if display_options == 'Show Default Data' :
+        if data_options == 'Processed News Articles Data' :
+            st.markdown('Processed News Articles Data')
+            AgGrid(news_df.drop('temp_list', axis=1), theme=theme)
+
+        if data_options == 'Bitcoin Hourly Price Data' :
+            st.markdown('Bitcoin Hourly Price Data')
+            AgGrid(btc_df.drop(['Unix Timestamp', 'Symbol'], axis=1), fit_columns_on_grid_load=True, theme=theme)
+
+    if display_options == 'Show Created/Uploaded Datasets' :
+        created_dir = os.path.join('.','created datasets')
+        # files = []
+        for file in created_dir :
+            files = [f for f in os.listdir(created_dir)]
+        
+        if files :
+            file_select = st.selectbox('Select File', ['']+files)
+            # file = os.path.join('created datasets', file_select)
+            file = os.path.join(created_dir, file_select)
+            df = pd.read_csv(file, header=None, names=['Links'])
+            AgGrid(df, fit_columns_on_grid_load=True)
+
+        else :
+            st.error('No files found. Please upload files first!')
 
 
 @st.cache(persist=True, suppress_st_warning=True)
