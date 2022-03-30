@@ -1,5 +1,6 @@
 import os
 import time
+import pickle
 from datetime import datetime
 from unittest import result
 import pandas as pd
@@ -14,7 +15,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier, ExtraTreesClassifier
 from sklearn.svm import SVC
 from sklearn.neural_network import MLPClassifier
-from sklearn.neighbors import KNeighborsClassifier
+from sklearn.neighbors import KNeighborsClassifier 
 from sklearn.metrics import accuracy_score, f1_score
 from skopt import BayesSearchCV
 
@@ -153,11 +154,31 @@ def tune(feature_set):
                             with col8 :
                                 # st.markdown('<p></p>', unsafe_allow_html=True)
                                 # st.markdown('<p></p>', unsafe_allow_html=True)
-                                # st.markdown('<p></p>', unsafe_allow_html=True)
-                                # st.markdown('<p></p>', unsafe_allow_html=True)
                                 st.markdown("<p style='text-align: center; color: green;'><b>Bernoulli Naive Bayes Results</b></p>", unsafe_allow_html=True)
                                 st.markdown(f"<p style='text-align: center; color: green;'><b>Accuracy : {acc}</b></p>", unsafe_allow_html=True)
                                 st.markdown(f"<p style='text-align: center; color: green;'><b>F1 Score : {f1}</b></p>", unsafe_allow_html=True)
+                                st.markdown('<p></p>', unsafe_allow_html=True)
+                                st.markdown('<p></p>', unsafe_allow_html=True)
+                        
+                        c1,c2,c3,c4 = st.columns((1,1,1,2.5))
+
+                        with c3 :
+                            save_button = st.button('Save model')
+                        
+                        with c4 :
+                            delete_button = st.button('Delete model')
+
+                        if save_button :
+                            filename = model
+                            st.info('Saving Bernoulli Naive Bayes Model')
+                            pickle.dump(clf, open(os.path.join('.','models', filename+'.sav'), 'wb'))
+                            st.success('Bernoulli Naive Bayes Model saved successfully!')
+                        
+                        if delete_button :
+                            try :
+                                os.remove(os.path.join('.','models', model+'.sav'))
+                            except :
+                                st.error('File not found! Please make sure the model is already saved')
 
                     except Exception:
                         if strategy == 'Grid Search CV' :
@@ -254,11 +275,31 @@ def tune(feature_set):
                             with col8 :
                                 # st.markdown('<p></p>', unsafe_allow_html=True)
                                 # st.markdown('<p></p>', unsafe_allow_html=True)
-                                # st.markdown('<p></p>', unsafe_allow_html=True)
-                                # st.markdown('<p></p>', unsafe_allow_html=True)
                                 st.markdown("<p style='text-align: center; color: green;'><b>Gaussian Naive Bayes Results</b></p>", unsafe_allow_html=True)
                                 st.markdown(f"<p style='text-align: center; color: green;'><b>Accuracy : {acc}</b></p>", unsafe_allow_html=True)
                                 st.markdown(f"<p style='text-align: center; color: green;'><b>F1 Score : {f1}</b></p>", unsafe_allow_html=True)
+                                st.markdown('<p></p>', unsafe_allow_html=True)
+                                st.markdown('<p></p>', unsafe_allow_html=True)
+
+                        c1,c2,c3,c4 = st.columns((1,1,1,2.5))
+
+                        with c3 :
+                            save_button = st.button('Save model')
+                        
+                        with c4 :
+                            delete_button = st.button('Delete model')
+
+                        if save_button :
+                            filename = model
+                            st.info('Saving Bernoulli Naive Bayes Model')
+                            pickle.dump(clf, open(os.path.join('.','models', filename+'.sav'), 'wb'))
+                            st.success('Bernoulli Naive Bayes Model saved successfully!')
+                        
+                        if delete_button :
+                            try :
+                                os.remove(os.path.join('.','models', model+'.sav'))
+                            except :
+                                st.error('File not found! Please make sure the model is already saved')
 
                     except Exception:
                         if strategy == 'Grid Search CV' :
@@ -341,7 +382,7 @@ def tune(feature_set):
                     st.success('Hyperparameter Tuning Done')
                     st.write("Tuning Time:", end - start)
 
-                    st.write('Best parameters for    :\n', clf.best_params_)
+                    st.write('Best parameters for  K-Nearest Neighbors  :\n', clf.best_params_)
 
                     col8, col9 = st.columns((20, 1))
 
@@ -355,11 +396,33 @@ def tune(feature_set):
                             with col8 :
                                 # st.markdown('<p></p>', unsafe_allow_html=True)
                                 # st.markdown('<p></p>', unsafe_allow_html=True)
-                                # st.markdown('<p></p>', unsafe_allow_html=True)
-                                # st.markdown('<p></p>', unsafe_allow_html=True)
                                 st.markdown("<p style='text-align: center; color: green;'><b>K-Nearest Neighbors Results</b></p>", unsafe_allow_html=True)
                                 st.markdown(f"<p style='text-align: center; color: green;'><b>Accuracy : {acc}</b></p>", unsafe_allow_html=True)
                                 st.markdown(f"<p style='text-align: center; color: green;'><b>F1 Score : {f1}</b></p>", unsafe_allow_html=True)
+                                st.markdown('<p></p>', unsafe_allow_html=True)
+                                st.markdown('<p></p>', unsafe_allow_html=True)
+                                
+
+                        c1,c2,c3,c4 = st.columns((1,1,1,2.5))
+
+                        with c3 :
+                            save_button = st.button('Save model')
+                        
+                        with c4 :
+                            delete_button = st.button('Delete model')
+
+                        if save_button :
+                            filename = model
+                            st.info('Saving Bernoulli Naive Bayes Model')
+                            pickle.dump(clf, open(os.path.join('.','models', filename+'.sav'), 'wb'))
+                            st.success('Bernoulli Naive Bayes Model saved successfully!')
+                        
+                        if delete_button :
+                            try :
+                                os.remove(os.path.join('.','models', model+'.sav'))
+                            except :
+                                st.error('File not found! Please make sure the model is already saved')
+
 
                     except Exception:
                         if strategy == 'Grid Search CV' :
@@ -414,7 +477,7 @@ def tune(feature_set):
                         clf = GridSearchCV(estimator=LogisticRegression(), param_grid=parameters, cv=tscv, verbose=10, n_jobs=1, refit=retrain)
 
                     if strategy == 'Random Search CV' :
-                        clf = RandomizedSearchCV(estimator=LogisticRegression(), param_grid=parameters, cv=tscv, verbose=10, n_jobs=1, refit=retrain)
+                        clf = RandomizedSearchCV(estimator=LogisticRegression(), param_distributions=parameters, cv=tscv, verbose=10, n_jobs=1, refit=retrain)
                     
                     if strategy == 'Halving Grid Search CV' :
                         clf = HalvingGridSearchCV(estimator=LogisticRegression(), param_grid=parameters, cv=tscv, min_resources=1, max_resources=10,verbose=10, n_jobs=1, refit=retrain)
@@ -445,20 +508,49 @@ def tune(feature_set):
 
                     col8, col9 = st.columns((20, 1))
 
-                    y_pred = clf.predict(feature_set.drop('Class',axis=1))
-                    # st.write(y_pred)
+                    try :
+                        y_pred = clf.predict(feature_set.drop('Class',axis=1))
+                        # st.write(y_pred)
 
-                    acc = accuracy_score(feature_set['Class'], y_pred)
-                    f1 = f1_score(feature_set['Class'], y_pred)
+                        acc = accuracy_score(feature_set['Class'], y_pred)
+                        f1 = f1_score(feature_set['Class'], y_pred)
 
-                    with col8 :
-                        # st.markdown('<p></p>', unsafe_allow_html=True)
-                        # st.markdown('<p></p>', unsafe_allow_html=True)
-                        # st.markdown('<p></p>', unsafe_allow_html=True)
-                        # st.markdown('<p></p>', unsafe_allow_html=True)
-                        st.markdown("<p style='text-align: center; color: green;'><b>Logistic Regression</b></p>", unsafe_allow_html=True)
-                        st.markdown(f"<p style='text-align: center; color: green;'><b>Accuracy : {acc}</b></p>", unsafe_allow_html=True)
-                        st.markdown(f"<p style='text-align: center; color: green;'><b>F1 Score : {f1}</b></p>", unsafe_allow_html=True)
+                        if results == 'Yes' :
+                            with col8 :
+                                # st.markdown('<p></p>', unsafe_allow_html=True)
+                                # st.markdown('<p></p>', unsafe_allow_html=True)
+                                st.markdown("<p style='text-align: center; color: green;'><b>Logistic Regression</b></p>", unsafe_allow_html=True)
+                                st.markdown(f"<p style='text-align: center; color: green;'><b>Accuracy : {acc}</b></p>", unsafe_allow_html=True)
+                                st.markdown(f"<p style='text-align: center; color: green;'><b>F1 Score : {f1}</b></p>", unsafe_allow_html=True)
+                                st.markdown('<p></p>', unsafe_allow_html=True)
+                                st.markdown('<p></p>', unsafe_allow_html=True)
+
+                        c1,c2,c3,c4 = st.columns((1,1,1,2.5))
+
+                        with c3 :
+                            save_button = st.button('Save model')
+                        
+                        with c4 :
+                            delete_button = st.button('Delete model')
+
+                        if save_button :
+                            filename = model
+                            st.info('Saving Bernoulli Naive Bayes Model')
+                            pickle.dump(clf, open(os.path.join('.','models', filename+'.sav'), 'wb'))
+                            st.success('Bernoulli Naive Bayes Model saved successfully!')
+                        
+                        if delete_button :
+                            try :
+                                os.remove(os.path.join('.','models', model+'.sav'))
+                            except :
+                                st.error('File not found! Please make sure the model is already saved')
+
+                    except Exception:
+                        if strategy == 'Grid Search CV' :
+                            st.error('GridSearchCV can only predict if the model is retrained with the best parameters! Please select `Retrain with the optimal parameters` to True ')
+
+                        if strategy == 'Random Search CV' :
+                            st.error('RandomizedSearchCV can only predict if the model is retrained with the best parameters! Please select `Retrain with the optimal parameters` to True ')
 
         if model == 'Random Forest' :
             parameters = {'n_estimators':[10,20,30,40,50], 'criterion':['gini', 'entropy'],
@@ -554,11 +646,31 @@ def tune(feature_set):
                             with col8 :
                                 # st.markdown('<p></p>', unsafe_allow_html=True)
                                 # st.markdown('<p></p>', unsafe_allow_html=True)
-                                # st.markdown('<p></p>', unsafe_allow_html=True)
-                                # st.markdown('<p></p>', unsafe_allow_html=True)
                                 st.markdown("<p style='text-align: center; color: green;'><b>Random Forest Results</b></p>", unsafe_allow_html=True)
                                 st.markdown(f"<p style='text-align: center; color: green;'><b>Accuracy : {acc}</b></p>", unsafe_allow_html=True)
                                 st.markdown(f"<p style='text-align: center; color: green;'><b>F1 Score : {f1}</b></p>", unsafe_allow_html=True)
+                                st.markdown('<p></p>', unsafe_allow_html=True)
+                                st.markdown('<p></p>', unsafe_allow_html=True)
+
+                        c1,c2,c3,c4 = st.columns((1,1,1,2.5))
+
+                        with c3 :
+                            save_button = st.button('Save model')
+                        
+                        with c4 :
+                            delete_button = st.button('Delete model')
+
+                        if save_button :
+                            filename = model
+                            st.info('Saving Bernoulli Naive Bayes Model')
+                            pickle.dump(clf, open(os.path.join('.','models', filename+'.sav'), 'wb'))
+                            st.success('Bernoulli Naive Bayes Model saved successfully!')
+                        
+                        if delete_button :
+                            try :
+                                os.remove(os.path.join('.','models', model+'.sav'))
+                            except :
+                                st.error('File not found! Please make sure the model is already saved')
 
                     except Exception:
                         if strategy == 'Grid Search CV' :
@@ -663,6 +775,26 @@ def tune(feature_set):
                                 st.markdown(f"<p style='text-align: center; color: green;'><b>Accuracy : {acc}</b></p>", unsafe_allow_html=True)
                                 st.markdown(f"<p style='text-align: center; color: green;'><b>F1 Score : {f1}</b></p>", unsafe_allow_html=True)
 
+                        c1,c2,c3,c4 = st.columns((1,1,1,2.5))
+
+                        with c3 :
+                            save_button = st.button('Save model')
+                        
+                        with c4 :
+                            delete_button = st.button('Delete model')
+
+                        if save_button :
+                            filename = model
+                            st.info('Saving Bernoulli Naive Bayes Model')
+                            pickle.dump(clf, open(os.path.join('.','models', filename+'.sav'), 'wb'))
+                            st.success('Bernoulli Naive Bayes Model saved successfully!')
+                        
+                        if delete_button :
+                            try :
+                                os.remove(os.path.join('.','models', model+'.sav'))
+                            except :
+                                st.error('File not found! Please make sure the model is already saved')
+
                     except Exception:
                         if strategy == 'Grid Search CV' :
                             st.error('GridSearchCV can only predict if the model is retrained with the best parameters! Please select `Retrain with the optimal parameters` to True ')
@@ -761,11 +893,31 @@ def tune(feature_set):
                             with col8 :
                                 # st.markdown('<p></p>', unsafe_allow_html=True)
                                 # st.markdown('<p></p>', unsafe_allow_html=True)
-                                # st.markdown('<p></p>', unsafe_allow_html=True)
-                                # st.markdown('<p></p>', unsafe_allow_html=True)
                                 st.markdown("<p style='text-align: center; color: green;'><b>Multi-Layer Perceptron Results</b></p>", unsafe_allow_html=True)
                                 st.markdown(f"<p style='text-align: center; color: green;'><b>Accuracy : {acc}</b></p>", unsafe_allow_html=True)
                                 st.markdown(f"<p style='text-align: center; color: green;'><b>F1 Score : {f1}</b></p>", unsafe_allow_html=True)
+                                st.markdown('<p></p>', unsafe_allow_html=True)
+                                st.markdown('<p></p>', unsafe_allow_html=True)
+
+                        c1,c2,c3,c4 = st.columns((1,1,1,2.5))
+
+                        with c3 :
+                            save_button = st.button('Save model')
+                        
+                        with c4 :
+                            delete_button = st.button('Delete model')
+
+                        if save_button :
+                            filename = model
+                            st.info('Saving Bernoulli Naive Bayes Model')
+                            pickle.dump(clf, open(os.path.join('.','models', filename+'.sav'), 'wb'))
+                            st.success('Bernoulli Naive Bayes Model saved successfully!')
+                        
+                        if delete_button :
+                            try :
+                                os.remove(os.path.join('.','models', model+'.sav'))
+                            except :
+                                st.error('File not found! Please make sure the model is already saved')
 
                     except Exception:
                         if strategy == 'Grid Search CV' :
@@ -932,11 +1084,31 @@ def tune(feature_set):
                                 with col8 :
                                     # st.markdown('<p></p>', unsafe_allow_html=True)
                                     # st.markdown('<p></p>', unsafe_allow_html=True)
-                                    # st.markdown('<p></p>', unsafe_allow_html=True)
-                                    # st.markdown('<p></p>', unsafe_allow_html=True)
                                     st.markdown("<p style='text-align: center; color: green;'><b>Bernoulli Naive Bayes Results</b></p>", unsafe_allow_html=True)
                                     st.markdown(f"<p style='text-align: center; color: green;'><b>Accuracy : {acc}</b></p>", unsafe_allow_html=True)
                                     st.markdown(f"<p style='text-align: center; color: green;'><b>F1 Score : {f1}</b></p>", unsafe_allow_html=True)
+                                    st.markdown('<p></p>', unsafe_allow_html=True)
+                                    st.markdown('<p></p>', unsafe_allow_html=True)
+                            
+                            c1,c2,c3,c4 = st.columns((1,1,1,2.5))
+
+                            with c3 :
+                                save_button = st.button('Save model')
+                            
+                            with c4 :
+                                delete_button = st.button('Delete model')
+
+                            if save_button :
+                                filename = model
+                                st.info('Saving Bernoulli Naive Bayes Model')
+                                pickle.dump(clf, open(os.path.join('.','models', filename+'.sav'), 'wb'))
+                                st.success('Bernoulli Naive Bayes Model saved successfully!')
+                            
+                            if delete_button :
+                                try :
+                                    os.remove(os.path.join('.','models', model+'.sav'))
+                                except :
+                                    st.error('File not found! Please make sure the model is already saved')
 
                         except Exception:
                             if strategy == 'Grid Search CV' :
@@ -1060,11 +1232,31 @@ def tune(feature_set):
                                 with col8 :
                                     # st.markdown('<p></p>', unsafe_allow_html=True)
                                     # st.markdown('<p></p>', unsafe_allow_html=True)
-                                    # st.markdown('<p></p>', unsafe_allow_html=True)
-                                    # st.markdown('<p></p>', unsafe_allow_html=True)
-                                    st.markdown("<p style='text-align: center; color: green;'><b>Bernoulli Naive Bayes Results</b></p>", unsafe_allow_html=True)
+                                    st.markdown("<p style='text-align: center; color: green;'><b>Gaussian Naive Bayes Results</b></p>", unsafe_allow_html=True)
                                     st.markdown(f"<p style='text-align: center; color: green;'><b>Accuracy : {acc}</b></p>", unsafe_allow_html=True)
                                     st.markdown(f"<p style='text-align: center; color: green;'><b>F1 Score : {f1}</b></p>", unsafe_allow_html=True)
+                                    st.markdown('<p></p>', unsafe_allow_html=True)
+                                    st.markdown('<p></p>', unsafe_allow_html=True)
+                            
+                            c1,c2,c3,c4 = st.columns((1,1,1,2.5))
+
+                            with c3 :
+                                save_button = st.button('Save model')
+                            
+                            with c4 :
+                                delete_button = st.button('Delete model')
+
+                            if save_button :
+                                filename = model
+                                st.info('Saving Gaussian Naive Bayes Model')
+                                pickle.dump(clf, open(os.path.join('.','models', filename+'.sav'), 'wb'))
+                                st.success('Gaussian Naive Bayes Model saved successfully!')
+                            
+                            if delete_button :
+                                try :
+                                    os.remove(os.path.join('.','models', model+'.sav'))
+                                except :
+                                    st.error('File not found! Please make sure the model is already saved')
 
                         except Exception:
                             if strategy == 'Grid Search CV' :
@@ -1204,11 +1396,31 @@ def tune(feature_set):
                                 with col8 :
                                     # st.markdown('<p></p>', unsafe_allow_html=True)
                                     # st.markdown('<p></p>', unsafe_allow_html=True)
-                                    # st.markdown('<p></p>', unsafe_allow_html=True)
-                                    # st.markdown('<p></p>', unsafe_allow_html=True)
                                     st.markdown("<p style='text-align: center; color: green;'><b>K-Nearest Neighbors Results</b></p>", unsafe_allow_html=True)
                                     st.markdown(f"<p style='text-align: center; color: green;'><b>Accuracy : {acc}</b></p>", unsafe_allow_html=True)
                                     st.markdown(f"<p style='text-align: center; color: green;'><b>F1 Score : {f1}</b></p>", unsafe_allow_html=True)
+                                    st.markdown('<p></p>', unsafe_allow_html=True)
+                                    st.markdown('<p></p>', unsafe_allow_html=True)
+                            
+                            c1,c2,c3,c4 = st.columns((1,1,1,2.5))
+
+                            with c3 :
+                                save_button = st.button('Save model')
+                            
+                            with c4 :
+                                delete_button = st.button('Delete model')
+
+                            if save_button :
+                                filename = model
+                                st.info('Saving K-Nearest Neighbors Model')
+                                pickle.dump(clf, open(os.path.join('.','models', filename+'.sav'), 'wb'))
+                                st.success('K-Nearest Neighbors Model saved successfully!')
+                            
+                            if delete_button :
+                                try :
+                                    os.remove(os.path.join('.','models', model+'.sav'))
+                                except :
+                                    st.error('File not found! Please make sure the model is already saved')
 
                         except Exception:
                             if strategy == 'Grid Search CV' :
@@ -1360,11 +1572,31 @@ def tune(feature_set):
                                 with col8 :
                                     # st.markdown('<p></p>', unsafe_allow_html=True)
                                     # st.markdown('<p></p>', unsafe_allow_html=True)
-                                    # st.markdown('<p></p>', unsafe_allow_html=True)
-                                    # st.markdown('<p></p>', unsafe_allow_html=True)
                                     st.markdown("<p style='text-align: center; color: green;'><b>Logistic Regression Results</b></p>", unsafe_allow_html=True)
                                     st.markdown(f"<p style='text-align: center; color: green;'><b>Accuracy : {acc}</b></p>", unsafe_allow_html=True)
                                     st.markdown(f"<p style='text-align: center; color: green;'><b>F1 Score : {f1}</b></p>", unsafe_allow_html=True)
+                                    st.markdown('<p></p>', unsafe_allow_html=True)
+                                    st.markdown('<p></p>', unsafe_allow_html=True)
+                            
+                            c1,c2,c3,c4 = st.columns((1,1,1,2.5))
+
+                            with c3 :
+                                save_button = st.button('Save model')
+                            
+                            with c4 :
+                                delete_button = st.button('Delete model')
+
+                            if save_button :
+                                filename = model
+                                st.info('Saving Logistic Regression Model')
+                                pickle.dump(clf, open(os.path.join('.','models', filename+'.sav'), 'wb'))
+                                st.success('Logistic Regression Model saved successfully!')
+                            
+                            if delete_button :
+                                try :
+                                    os.remove(os.path.join('.','models', model+'.sav'))
+                                except :
+                                    st.error('File not found! Please make sure the model is already saved')
 
                         except Exception:
                             if strategy == 'Grid Search CV' :
@@ -1519,11 +1751,31 @@ def tune(feature_set):
                                 with col8 :
                                     # st.markdown('<p></p>', unsafe_allow_html=True)
                                     # st.markdown('<p></p>', unsafe_allow_html=True)
-                                    # st.markdown('<p></p>', unsafe_allow_html=True)
-                                    # st.markdown('<p></p>', unsafe_allow_html=True)
                                     st.markdown("<p style='text-align: center; color: green;'><b>Random Forest Results</b></p>", unsafe_allow_html=True)
                                     st.markdown(f"<p style='text-align: center; color: green;'><b>Accuracy : {acc}</b></p>", unsafe_allow_html=True)
                                     st.markdown(f"<p style='text-align: center; color: green;'><b>F1 Score : {f1}</b></p>", unsafe_allow_html=True)
+                                    st.markdown('<p></p>', unsafe_allow_html=True)
+                                    st.markdown('<p></p>', unsafe_allow_html=True)
+                            
+                            c1,c2,c3,c4 = st.columns((1,1,1,2.5))
+
+                            with c3 :
+                                save_button = st.button('Save model')
+                            
+                            with c4 :
+                                delete_button = st.button('Delete model')
+
+                            if save_button :
+                                filename = model
+                                st.info('Saving Random Forest Model')
+                                pickle.dump(clf, open(os.path.join('.','models', filename+'.sav'), 'wb'))
+                                st.success('Random Forest Model saved successfully!')
+                            
+                            if delete_button :
+                                try :
+                                    os.remove(os.path.join('.','models', model+'.sav'))
+                                except :
+                                    st.error('File not found! Please make sure the model is already saved')
 
                         except Exception:
                             if strategy == 'Grid Search CV' :
@@ -1532,4 +1784,342 @@ def tune(feature_set):
                             if strategy == 'Random Search CV' :
                                 st.error('RandomizedSearchCV can only predict if the model is retrained with the best parameters! Please select `Retrain with the optimal parameters` to True ')
 
+        if model == 'Support Vector Machine' :
+            if scaling == '' :
+                st.warning('Please select scaling technique!')
+
+            if retrain == '' :
+                st.warning('Please select to retrain model with optimal parameters or not')
+
+            if strategy == '' :
+                st.warning('Please select a optimization/search strategy')
+
+            if results == '' :
+                st.warning('Please select to show retrain results or not')
+
+            if retrain == 'No' :
+                retrain = False
             
+            if retrain == 'Yes' :
+                retrain = True
+
+            if (scaling != '') and (retrain != '') and (strategy != '') and (results != ''):
+                col1,col2,col3,col4,col5 = st.columns(5)
+                                    
+                with col1 :
+                    C_min = int(st.text_input('Enter Minimum Value for C', value=1))
+                    C_max = int(st.text_input('Enter Maximum Value for C', value=10))
+                    C_step_size = int(st.text_input('Enter Step Size Value for C', value=1))
+                with col2 :
+                    degree_min = int(st.text_input('Enter Minimum Value for Degree of Polynomial', value=1))
+                    degree_max = int(st.text_input('Enter Maximum Value for Degree of Polynomial', value=10))
+                    degree_step_size = int(st.text_input('Enter Step Size Value for Degree of Polynomial', value=1))
+                with col3 :
+                    coef0_min = int(st.text_input('Enter Minimum Value for Independent Term in Kernel Function', value=1))
+                    coef0_max = int(st.text_input('Enter Maximum Value for Independent Term in Kernel Function', value=10))
+                    coef0_step_size = int(st.text_input('Enter Step Size Value for Independent Term in Kernel Function', value=1))
+                with col4 :
+                    tol_min = int(st.text_input('Enter Minimum Value for Tolerance for Stopping', value=1))
+                    tol_max = int(st.text_input('Enter Maximum Value for Tolerance for Stopping', value=10))
+                    tol_step_size = int(st.text_input('Enter Step Size Value for Tolerance for Stopping', value=1))
+                with col5 :
+                    gamma = st.multiselect('Select Gamma Values', ['scale', 'auto'])
+                    kernel = st.multiselect('Select Kernel Values', ['linear', 'poly', 'rbf', 'sigmoid'])
+                    shrinking = st.multiselect('Select Shrinking', [True, False])
+                    prob = st.multiselect('Select Probabilities', [True, False])
+
+                parameters = {'C':np.arange(C_min,C_max,C_step_size), 'degree':np.arange(degree_min,degree_max,degree_step_size), 
+                'coef0':np.arange(coef0_min,coef0_max,coef0_step_size), 'tol':np.arange(tol_min,tol_max,tol_step_size), 'gamma':gamma, 'kernel':kernel, 'shrinking':shrinking, 'probability':prob}
+            
+                params_df = pd.DataFrame({'C': [' , '.join(map(str, parameters['C']))], 'Degree': [' , '.join(map(str, parameters['degree']))], 
+                'Coef0': [' , '.join(map(str, parameters['coef0']))], 'Tolerance': [' , '.join(map(str, parameters['tol']))], 
+                'Gamma': [' , '.join(map(str, parameters['gamma']))], 'Kernel': [' , '.join(map(str, parameters['kernel']))],
+                'Shrinking': [' , '.join(map(str, parameters['shrinking']))]})
+
+                st.markdown("<p style='text-align: center; color: green;'>Parameter Search Space for Support Vector MachineSVC</p>", unsafe_allow_html=True)
+                st.dataframe(params_df)
+
+                if scaling == '' :
+                    st.warning('Please select scaling technique!')
+
+                if retrain == '' :
+                    st.warning('Please select to retrain model with optimal parameters or not')
+
+                if strategy == '' :
+                    st.warning('Please select a optimization/search strategy')
+
+                if results == '' :
+                    st.warning('Please select to show retrain results or not')
+
+                if retrain == 'No' :
+                    retrain = False
+                
+                if retrain == 'Yes' :
+                    retrain = True
+
+                if (scaling != '') and (retrain != '') and (strategy != '') and (results != ''):
+
+                    col_5, col_6, col_7 = st.columns((3.3,3,1))
+    
+                    with col_5 :
+                        st.write('' )
+
+                    with col_6 :
+                        button = st.button('Tune parameters!')
+
+                    with col_7 :
+                        st.write('')
+
+                    if button :
+
+                        if strategy == 'Grid Search CV' :
+                            clf = GridSearchCV(estimator=SVC(), param_grid=parameters, cv=tscv, verbose=10, n_jobs=1, refit=retrain)
+
+                        if strategy == 'Random Search CV' :
+                            clf = RandomizedSearchCV(estimator=SVC(), param_distributions=parameters, cv=tscv, verbose=10, n_jobs=1, refit=retrain)
+                        
+                        if strategy == 'Halving Grid Search CV' :
+                            clf = HalvingGridSearchCV(estimator=SVC(), param_grid=parameters, cv=tscv, min_resources=1, max_resources=10,verbose=10, n_jobs=1, refit=retrain)
+
+                        # if strategy == 'Bayesian Optimization' :
+                        #     clf = BayesSearchCV(estimator=RandomForestClassifier(), search_spaces=parameters, cv=tscv, verbose=10, n_jobs=1, refit=retrain)
+                        
+
+                        placeholder = st.empty()
+                        with placeholder.container():
+                            st.info('Tuning the parameters. This make take a while. Please be patient. Thank you 😊')
+                            grid = ParameterGrid(parameters)
+                            st.write (f"The total number of parameters-combinations is: {len(grid)}")
+                            st.write (f"The total number of iterations is: {len(grid)*113}")
+
+                        start = datetime.now()
+
+                        clf.fit(feature_set.drop('Class',axis=1),feature_set['Class'])
+
+                        end = datetime.now()
+
+                        placeholder.empty()
+
+                        print("Tune Fit Time:", end - start)
+
+                        st.success('Hyperparameter Tuning Done')
+                        st.write("Tuning Time:", end - start)
+
+                        st.write('Best parameters for Support Vector Machine :\n', clf.best_params_)
+
+                        col8, col9 = st.columns((20, 1))
+
+                        try :
+                            y_pred = clf.predict(feature_set.drop('Class',axis=1))
+
+                            acc = accuracy_score(feature_set['Class'], y_pred)
+                            f1 = f1_score(feature_set['Class'], y_pred)
+
+                            if results == 'Yes' :
+                                with col8 :
+                                    # st.markdown('<p></p>', unsafe_allow_html=True)
+                                    # st.markdown('<p></p>', unsafe_allow_html=True)
+                                    st.markdown("<p style='text-align: center; color: green;'><b>Support Vector Machine Results</b></p>", unsafe_allow_html=True)
+                                    st.markdown(f"<p style='text-align: center; color: green;'><b>Accuracy : {acc}</b></p>", unsafe_allow_html=True)
+                                    st.markdown(f"<p style='text-align: center; color: green;'><b>F1 Score : {f1}</b></p>", unsafe_allow_html=True)
+                                    st.markdown('<p></p>', unsafe_allow_html=True)
+                                    st.markdown('<p></p>', unsafe_allow_html=True)
+                            
+                            c1,c2,c3,c4 = st.columns((1,1,1,2.5))
+
+                            with c3 :
+                                save_button = st.button('Save model')
+                            
+                            with c4 :
+                                delete_button = st.button('Delete model')
+
+                            if save_button :
+                                filename = model
+                                st.info('Saving Support Vector Machine Model')
+                                pickle.dump(clf, open(os.path.join('.','models', filename+'.sav'), 'wb'))
+                                st.success('Support Vector Machine Model saved successfully!')
+                            
+                            if delete_button :
+                                try :
+                                    os.remove(os.path.join('.','models', model+'.sav'))
+                                except :
+                                    st.error('File not found! Please make sure the model is already saved')
+
+                        except Exception:
+                            if strategy == 'Grid Search CV' :
+                                st.error('GridSearchCV can only predict if the model is retrained with the best parameters! Please select `Retrain with the optimal parameters` to True ')
+
+                            if strategy == 'Random Search CV' :
+                                st.error('RandomizedSearchCV can only predict if the model is retrained with the best parameters! Please select `Retrain with the optimal parameters` to True ')
+
+        if model == 'Multi-Layer Perceptron' :
+            if scaling == '' :
+                st.warning('Please select scaling technique!')
+
+            if retrain == '' :
+                st.warning('Please select to retrain model with optimal parameters or not')
+
+            if strategy == '' :
+                st.warning('Please select a optimization/search strategy')
+
+            if results == '' :
+                st.warning('Please select to show retrain results or not')
+
+            if retrain == 'No' :
+                retrain = False
+            
+            if retrain == 'Yes' :
+                retrain = True
+
+            if (scaling != '') and (retrain != '') and (strategy != '') and (results != ''):
+                col1,col2,col3,col4,col5,col6 = st.columns(6)
+                                    
+                with col1 :
+                    layers_min = int(st.text_input('Enter Minimum Value for # of Hidden Layers', value=1))
+                    layers_max = int(st.text_input('Enter Maximum Value for # of Hidden Layers', value=10))
+                    layers_step_size = int(st.text_input('Enter Step Size Value for # of Hidden Layers', value=1))
+                with col2 :
+                    Alpha_min = int(st.text_input('Enter Minimum Value for Alpha', value=1))
+                    Alpha_max = int(st.text_input('Enter Maximum Value for Alpha', value=10))
+                    Alpha_step_size = int(st.text_input('Enter Step Size Value for Alpha', value=1))
+                with col3 :
+                    lr_min = float(st.text_input('Enter Minimum Value for Learning Rate', value=0.001))
+                    lr_max = float(st.text_input('Enter Maximum Value for Learning Rate', value=10))
+                    lr_step_size = int(st.text_input('Enter Step Size Value for Learning Rate', value=1))
+                with col4 :
+                    power_t_min = int(st.text_input('Enter Minimum Value for Power T', value=1))
+                    power_t_max = int(st.text_input('Enter Maximum Value for Power T', value=10))
+                    power_t_step_size = int(st.text_input('Enter Step Size Value for Power T', value=1))
+                with col5 :
+                    tol_min = float(st.text_input('Enter Minimum Value for Stopping Tolerance', value=1))
+                    tol_max = float(st.text_input('Enter Maximum Value for Stopping Tolerance', value=10))
+                    tol_step_size = int(st.text_input('Enter Step Size Value for Stopping Tolerance', value=1))
+                with col6 :
+                    activation = st.multiselect('Select Activation Functions', ['identity', 'logistic', 'tanh', 'relu'])
+                    solver = st.multiselect('Select Solvers', ['lbfgs', 'sgd', 'adam'])
+                    lrs = st.multiselect('Select Learning Rate Types', ['constant', 'invscaling', 'adaptive'])
+                    prob = st.multiselect('Select Shrinking', [True, False])
+
+                parameters = {'C':np.arange(C_min,C_max,C_step_size), 'IGNORE':[c for c in criterion], 'IGNORE':[f for f in max_features], 'degree':np.arange(degree_min,degree_max,degree_step_size), 
+                'coef0':np.arange(coef0_min,coef0_max,coef0_step_size), 'tol':np.arange(tol_min,tol_min,tol_min), 'gamma':gamma, 'kernel':kernel, 'shrinking':shrinking, 'prob':prob}
+            
+                params_df = pd.DataFrame({'C': [' , '.join(map(str, parameters['C']))], 'Degree': [' , '.join(map(str, parameters['degree']))], 
+                'Coef0': [' , '.join(map(str, parameters['coef0']))], 'Tolerance': [' , '.join(map(str, parameters['tol']))], 
+                'Gamma': [' , '.join(map(str, parameters['gamma']))], 'Kernel': [' , '.join(map(str, parameters['kernel']))],
+                'Shrinking': [' , '.join(map(str, parameters['shrinking']))]})
+
+                st.markdown("<p style='text-align: center; color: green;'>Parameter Search Space for Random Forest</p>", unsafe_allow_html=True)
+                st.dataframe(params_df)
+
+                if scaling == '' :
+                    st.warning('Please select scaling technique!')
+
+                if retrain == '' :
+                    st.warning('Please select to retrain model with optimal parameters or not')
+
+                if strategy == '' :
+                    st.warning('Please select a optimization/search strategy')
+
+                if results == '' :
+                    st.warning('Please select to show retrain results or not')
+
+                if retrain == 'No' :
+                    retrain = False
+                
+                if retrain == 'Yes' :
+                    retrain = True
+
+                if (scaling != '') and (retrain != '') and (strategy != '') and (results != ''):
+
+                    col_5, col_6, col_7 = st.columns((3.3,3,1))
+    
+                    with col_5 :
+                        st.write('' )
+
+                    with col_6 :
+                        button = st.button('Tune parameters!')
+
+                    with col_7 :
+                        st.write('')
+
+                    if button :
+
+                        if strategy == 'Grid Search CV' :
+                            clf = GridSearchCV(estimator=RandomForestClassifier(), param_grid=parameters, cv=tscv, verbose=10, n_jobs=1, refit=retrain)
+
+                        if strategy == 'Random Search CV' :
+                            clf = RandomizedSearchCV(estimator=RandomForestClassifier(), param_distributions=parameters, cv=tscv, verbose=10, n_jobs=1, refit=retrain)
+                        
+                        if strategy == 'Halving Grid Search CV' :
+                            clf = HalvingGridSearchCV(estimator=RandomForestClassifier(), param_grid=parameters, cv=tscv, min_resources=1, max_resources=10,verbose=10, n_jobs=1, refit=retrain)
+
+                        # if strategy == 'Bayesian Optimization' :
+                        #     clf = BayesSearchCV(estimator=RandomForestClassifier(), search_spaces=parameters, cv=tscv, verbose=10, n_jobs=1, refit=retrain)
+                        
+
+                        placeholder = st.empty()
+                        with placeholder.container():
+                            st.info('Tuning the parameters. This make take a while. Please be patient. Thank you 😊')
+                            grid = ParameterGrid(parameters)
+                            st.write (f"The total number of parameters-combinations is: {len(grid)}")
+                            st.write (f"The total number of iterations is: {len(grid)*113}")
+
+                        start = datetime.now()
+
+                        clf.fit(feature_set.drop('Class',axis=1),feature_set['Class'])
+
+                        end = datetime.now()
+
+                        placeholder.empty()
+
+                        print("Tune Fit Time:", end - start)
+
+                        st.success('Hyperparameter Tuning Done')
+                        st.write("Tuning Time:", end - start)
+
+                        st.write('Best parameters for Random Forest :\n', clf.best_params_)
+
+                        col8, col9 = st.columns((20, 1))
+
+                        try :
+                            y_pred = clf.predict(feature_set.drop('Class',axis=1))
+
+                            acc = accuracy_score(feature_set['Class'], y_pred)
+                            f1 = f1_score(feature_set['Class'], y_pred)
+
+                            if results == 'Yes' :
+                                with col8 :
+                                    # st.markdown('<p></p>', unsafe_allow_html=True)
+                                    # st.markdown('<p></p>', unsafe_allow_html=True)
+                                    st.markdown("<p style='text-align: center; color: green;'><b>Support Vector Machine Results</b></p>", unsafe_allow_html=True)
+                                    st.markdown(f"<p style='text-align: center; color: green;'><b>Accuracy : {acc}</b></p>", unsafe_allow_html=True)
+                                    st.markdown(f"<p style='text-align: center; color: green;'><b>F1 Score : {f1}</b></p>", unsafe_allow_html=True)
+                                    st.markdown('<p></p>', unsafe_allow_html=True)
+                                    st.markdown('<p></p>', unsafe_allow_html=True)
+                            
+                            c1,c2,c3,c4 = st.columns((1,1,1,2.5))
+
+                            with c3 :
+                                save_button = st.button('Save model')
+                            
+                            with c4 :
+                                delete_button = st.button('Delete model')
+
+                            if save_button :
+                                filename = model
+                                st.info('Saving Support Vector Machine Model')
+                                pickle.dump(clf, open(os.path.join('.','models', filename+'.sav'), 'wb'))
+                                st.success('Support Vector Machine Model saved successfully!')
+                            
+                            if delete_button :
+                                try :
+                                    os.remove(os.path.join('.','models', model+'.sav'))
+                                except :
+                                    st.error('File not found! Please make sure the model is already saved')
+
+                        except Exception:
+                            if strategy == 'Grid Search CV' :
+                                st.error('GridSearchCV can only predict if the model is retrained with the best parameters! Please select `Retrain with the optimal parameters` to True ')
+
+                            if strategy == 'Random Search CV' :
+                                st.error('RandomizedSearchCV can only predict if the model is retrained with the best parameters! Please select `Retrain with the optimal parameters` to True ')
