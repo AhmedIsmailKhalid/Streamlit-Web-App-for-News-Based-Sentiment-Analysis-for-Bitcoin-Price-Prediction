@@ -14,7 +14,7 @@ pickle4==0.0.1
 plotly==5.4.0
 plotly-express==0.4.1
 regex==2021.11.10
-requests==2.26.0
+requests
 scikit-hyperband==0.0.1
 scikit-image==0.17.2
 scikit-learn==0.24.2
