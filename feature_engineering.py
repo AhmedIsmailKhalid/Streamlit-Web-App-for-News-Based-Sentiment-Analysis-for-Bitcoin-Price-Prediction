@@ -1,5 +1,6 @@
 import time
 import requests
+import nltk
 import pandas as pd
 import numpy as np
 import regex as re
