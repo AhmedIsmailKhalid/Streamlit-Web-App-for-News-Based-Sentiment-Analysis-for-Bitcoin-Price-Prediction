@@ -15,7 +15,7 @@ from io import StringIO
 from nltk.corpus import stopwords, wordnet
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
-# from load_data import load
+from home_page import homepage
 from data import get_data
 from train_models import train
 from eda import perform_eda
@@ -61,8 +61,8 @@ news_df = pd.read_csv(os.path.join(data_dir,'NEWS DF.csv'))
 btc_df = pd.read_csv(os.path.join(data_dir,'Gemini_BTCUSD_1hr.csv'), skiprows=1)
 
 @app.addapp(is_home=True)
-def my_home():
-    hy.write('THIS IS THE HOME PAGE! ADD THE BITCOIN REALTIME PRICE AS WELL AS CHARTS IF POSSIBLE. ELSE JUST ADD SOME INFO ABOUT THE WEBSITE')
+def home():
+    homepage()
     
 @app.addapp(title='Data')
 def data():
