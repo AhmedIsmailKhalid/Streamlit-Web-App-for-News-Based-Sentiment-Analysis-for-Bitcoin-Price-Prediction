@@ -26,4 +26,5 @@ stop-words==2018.7.23
 stqdm==0.0.4
 streamlit==1.6.0
 streamlit-aggrid==0.2.2.post2
+vaderSentiment==3.3.2
 wordcloud==1.7.0
