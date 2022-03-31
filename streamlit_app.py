@@ -40,8 +40,8 @@ from sklearn.metrics import accuracy_score, f1_score
 
 app = hy.HydraApp(title='News Based Sentiment analysis for Bitcoin Price Prediction', navbar_theme={'txc_inactive': '#FFFFFF','menu_background':'orange','txc_active':'black'})
 
-nltk.download(stopwords)
-nltk.download(wordnet)
+nltk.download('stopwords')
+nltk.download('wordnet')
 
 # hide_menu_style = """
 #         <style>
