@@ -1,5 +1,6 @@
 import time
 import requests
+import nltk
 import pandas as pd
 import streamlit as st
 import regex as re
@@ -10,6 +11,8 @@ from nltk.corpus import stopwords, wordnet
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
 def process(LINKS_DF, BTC_DF) :
+    nltk.download(stopwords)
+    nltk.download(wordnet)
     headers = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:66.0) Gecko/20100101 Firefox/66.0", "Accept": 
     "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8", "Accept-Language": "en-US,en;q=0.5", "Accept-Encoding": "gzip, deflate", "DNT": "1", "Connection": "close", "Upgrade-Insecure-Requests": "1"}
 

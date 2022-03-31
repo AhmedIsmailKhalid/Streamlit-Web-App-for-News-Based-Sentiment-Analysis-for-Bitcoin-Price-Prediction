@@ -4,6 +4,7 @@ import sys
 import pickle
 import subprocess
 import glob
+import nltk
 import streamlit as st
 import hydralit as hy
 import pandas as pd
@@ -11,7 +12,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import plotly.express as px
 from io import StringIO
-from nltk.corpus import stopwords
+from nltk.corpus import stopwords, wordnet
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
 # from load_data import load
@@ -38,6 +39,9 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import accuracy_score, f1_score
 
 app = hy.HydraApp(title='News Based Sentiment analysis for Bitcoin Price Prediction', navbar_theme={'txc_inactive': '#FFFFFF','menu_background':'orange','txc_active':'black'})
+
+nltk.download(stopwords)
+nltk.download(wordnet)
 
 # hide_menu_style = """
 #         <style>
