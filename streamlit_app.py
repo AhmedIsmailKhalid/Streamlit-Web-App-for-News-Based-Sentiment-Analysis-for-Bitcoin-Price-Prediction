@@ -38,7 +38,7 @@ from sklearn.neural_network import MLPClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import accuracy_score, f1_score
 
-app = hy.HydraApp(title='News Based Sentiment analysis for Bitcoin Price Prediction', navbar_theme={'txc_inactive': '#FFFFFF','menu_background':'orange','txc_active':'black'})
+app = hy.HydraApp(title='News Based Sentiment analysis for Bitcoin Price Prediction', navbar_theme={'txc_inactive': '#FFFFFF','menu_background':'orange','txc_active':'#FFFFFF'})
 
 nltk.download('stopwords')
 nltk.download('wordnet')
